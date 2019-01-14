@@ -1,1 +1,1 @@
-web: gunicorn zomatosite.wsgi --log-file -
+web: gunicorn reviews.wsgi --log-file -
