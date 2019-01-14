@@ -1,0 +1,69 @@
+{% extends 'reviews/layout.html' %}
+
+{% block body %}
+<div class="ui grid">
+    <div class="four wide column left-pane">
+        <h1>Welcome {{ request.user.username }}</h1>
+
+        <form id="search-params">
+            {% csrf_token %}
+            <h2>Enter Search Query</h2>
+            <input class="form-control" name="query" type="text">
+            <h2>Select Cuisines</h2>
+            <div class="ui selection dropdown multiple" id="dropdown1">
+                <input name="cuisines-text" type="hidden">
+                <div class="default text">Select</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    {% for cuisine in cuisines %}
+                    <div class="item" data-value="{{cuisine.cuisine.cuisine_id}}">
+                        {{cuisine.cuisine.cuisine_name}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <h2>Select Category</h2>
+            <div class="ui selection dropdown" id="dropdown2">
+                <input name="categories-text" type="hidden">
+
+                <div class="default text">Select</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    {% for category in categories %}
+                    <div class="item" data-value="{{category.categories.id}}">
+                        {{category.categories.name}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <h2>Select Restaurant Type</h2>
+            <div class="ui selection dropdown" id="dropdown3">
+                <input name="establishments-text" type="hidden">
+
+                <div class="default text">Select</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    {% for establishment in establishments %}
+                    <div class="item" data-value="{{establishment.establishment.id}}">
+                        {{establishment.establishment.name}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div style="margin-top:16px">
+                <input class="btn btn-primary" type="submit" name="Go" value="Go">
+            </div>
+        </form>
+    </div>
+    <div class="one wide column">
+
+    </div>
+    <div class="eleven wide column">
+        <div class="ui divided items" id="right-pane">
+            <div class="ui active inverted dimmer" style="display: none" id="loader">
+                <div class="ui large text loader">Loading</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

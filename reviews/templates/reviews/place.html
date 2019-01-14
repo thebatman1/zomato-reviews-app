@@ -1,0 +1,121 @@
+{% extends 'reviews/layout.html' %}
+
+{% block body %}
+<img class="ui fluid rounded image" src="{{ details.featured_image }}">
+<h1>{{ details.name }}</h1>
+<table class="ui table">
+    <thead style="display: none">
+        <tr>
+            <th class="ten wide">Name</th>
+            <th class="six wide">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Location</td>
+            <td>{{ details.location.locality }}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{ details.location.address }}</td>
+        </tr>
+        <tr>
+            <td>Cuisines</td>
+            <td>{{ details.cuisines }}</td>
+        </tr>
+        <tr>
+            <td>Average Cost for Two</td>
+            <td>{{ details.average_cost_for_two }}</td>
+        </tr>
+        <tr>
+            <td>Rating</td>
+            <td>
+                <strong>
+                    {{ details.user_rating.aggregate_rating }}
+                </strong> / 5
+            </td>
+        </tr>
+        <tr>
+            <td>Votes</td>
+            <td>{{ details.user_rating.votes }}</td>
+        </tr>
+        <tr>
+            <td>Photos</td>
+            <td>
+                <a href="{{ details.photos_url }}" target="blank">See more photos</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Menu</td>
+            <td>
+                <a href="{{ details.menu_url }}" target="blank">See the menu</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Online delivery support</td>
+            <td>
+                {% if details.has_online_delivery == 1 %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h2>Existing Reviews</h2>
+<div class="ui comments">
+    {% for review in reviews %}
+        <div class="comment">
+            <a class="avatar">
+                <img src="{{ review.review.user.profile_image }}">
+            </a>
+            <div class="content">
+                <a class="author">{{ review.review.user.name }}</a>
+                <div class="metadata">
+                    <div class="date">
+                        {{ review.review.review_time_friendly }}
+                    </div>
+                    <div class="rating">
+                        <i class="star icon"></i>
+                        {{ review.review.rating }} stars
+                    </div>
+                </div>
+                <div class="text">
+                    {{ review.review.review_text }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% for review in stored_reviews %}
+        <div class="comment">
+            <a class="avatar">
+                <img src="https://www.pmidpi.com/wp-content/uploads/2015/07/person-placeholder.jpg">
+            </a>
+            <div class="content">
+                <a class="author">{{ review.username }}</a>
+                <div class="metadata">
+                    <div class="rating">
+                        <i class="star icon"></i>
+                        {{ review.rating }} stars
+                    </div>
+                </div>
+                <div class="text">
+                    {{ review.description }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<h2>Write a Review</h2>
+<form class="ui reply form" id="review-form">
+    {% csrf_token %}
+    <input name="res_id" type="hidden" value="{{ res_id }}">
+    <input name="username" type="hidden" value="{{ username }}">
+    <div class="ui huge star rating" style="margin-bottom:8px"></div>
+    <div class="field">
+            <textarea id="review_text"></textarea>
+    </div>
+    <input class="btn btn-primary" value="Submit" type="submit">
+</form>
+{% endblock %}

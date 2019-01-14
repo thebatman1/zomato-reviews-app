@@ -1,0 +1,13 @@
+{% extends 'reviews/layout.html' %}
+
+{% block body %}
+    <h1>Login</h1>
+    <form action="{% url 'reviews:login' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
