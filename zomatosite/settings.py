@@ -90,10 +90,11 @@ WSGI_APPLICATION = 'zomatosite.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default': dj_database_url.config(DATABASE_URL)
 }
 
 
