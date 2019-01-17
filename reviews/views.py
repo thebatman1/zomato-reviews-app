@@ -61,13 +61,13 @@ def register_view(request):
     return render(request, 'reviews/register.html', args)
 
 
-@login_required(login_url='/reviews/login/')
+@login_required(login_url='/reviews/login')
 def logout_view(request):
     logout(request)
     return redirect('/reviews')
 
 
-@login_required(login_url='/reviews/login/')
+@login_required(login_url='/reviews/login')
 def dashboard_view(request):
     '''
         This function handles the rendering of the dashboard
@@ -155,7 +155,7 @@ def dashboard_view(request):
         )
 
 
-@login_required(login_url='/reviews/login/')
+@login_required(login_url='/reviews/login')
 def place_view(request, restaurant_id):
     '''
         If the request method is POST
